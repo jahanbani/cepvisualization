@@ -1253,7 +1253,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const geoJsonModule = {
     loadGeoJson: () => {
-      fetch("data/transmission_lines_all_USA.geojson")
+      fetch("https://iastate.box.com/s/jiymw6skhrinj6oifieo0t4lfxbm9hlz")
         .then((response) => response.json())
         .then((data) => {
           geoJsonModule.addGeoJsonToMap(data);
