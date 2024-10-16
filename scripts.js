@@ -1253,7 +1253,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const geoJsonModule = {
     loadGeoJson: () => {
-      fetch("https://iastate.box.com/s/jiymw6skhrinj6oifieo0t4lfxbm9hlz")
+      fetch(
+        "https://iastate.box.com/download?file_id=jiymw6skhrinj6oifieo0t4lfxbm9hlz",
+      )
         .then((response) => response.json())
         .then((data) => {
           geoJsonModule.addGeoJsonToMap(data);
