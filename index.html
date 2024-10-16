@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generators & Flows</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+
+    <!-- Font Awesome CSS for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="controls_line">
+      <h1>Generators & Flows</h1>
+      <!-- Dataset Selection Control -->
+      <div class="control-group">
+        <label for="dataset-select">Select Dataset to Visualize:</label>
+        <select id="dataset-select" class="custom-select">
+          <option value="cumulative" selected>
+            Cumulative Generatioin Investments
+          </option>
+          <option value="annual">Annual Generatioin Investments</option>
+          <option value="gencaptot">Total Generation Capacity</option>
+          <option value="genrety">Annual Generatioin Retirement</option>
+          <option value="genretcumulative">
+            Cumulative Generatioin Retirement
+          </option>
+          <option value="gendisp">Generatioin Dispatch</option>
+          <!-- New Option -->
+        </select>
+      </div>
+
+      <!-- Pie Chart Controls -->
+      <div class="control-group">
+        <label for="year-select">Select the Year for Investments:</label>
+        <select id="year-select" class="custom-select">
+          <option value="2031">2031</option>
+          <option value="2036">2036</option>
+          <option value="2041">2041</option>
+          <option value="2046">2046</option>
+          <option value="2051">2051</option>
+        </select>
+      </div>
+
+      <div id="gendisp-controls" style="display: none">
+        <div class="control-group">
+          <label for="season-select">Select the Season:</label>
+          <select id="season-select" class="custom-select">
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Peak">Peak</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="block-select">Select the Block:</label>
+          <select id="block-select" class="custom-select">
+            <!-- This will be populated dynamically -->
+          </select>
+        </div>
+      </div>
+      <button id="toggleGeoJsonLayer">Toggle Transmission Lines</button>
+      <button id="togglePieChartsLayer">
+        <i class="fas fa-chart-pie"></i>
+        <span> Hide Pie Charts</span>
+      </button>
+      <button id="toggleLegend">
+        <i class="fas fa-list"></i>
+        <span> Hide Legend</span>
+      </button>
+      <button id="resetMapView">
+        <i class="fas fa-map-marked-alt"></i>
+        <span> Reset Map View</span>
+      </button>
+
+      <h2>Line Flows</h2>
+      <button id="toggleLinesLayer">
+        <i class="fas fa-exchange-alt"></i>
+        <span> Toggle Flow Lines</span>
+      </button>
+
+      <div class="control-group">
+        <label for="yearSelect_line">Select the Year:</label>
+        <select id="yearSelect_line" class="custom-select">
+          <option value="TITLE">Select the Year</option>
+          <option value="2031" selected>2031</option>
+          <option value="2036">2036</option>
+          <option value="2041">2041</option>
+          <option value="2046">2046</option>
+          <option value="2051">2051</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="seasonSelect_line">Select the Season:</label>
+        <select id="seasonSelect_line" class="custom-select">
+          <option value="TITLE">Select the Season</option>
+          <option value="Fall" selected>Fall</option>
+          <option value="Winter">Winter</option>
+          <option value="Spring">Spring</option>
+          <option value="Summer">Summer</option>
+          <option value="Peak">Peak</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="blockSelect_line">Select the Block:</label>
+        <select id="blockSelect_line" class="custom-select">
+          <option value="TITLE">Select the Block</option>
+          <!-- Block options will be populated dynamically -->
+        </select>
+      </div>
+
+      <button id="showFlows">
+        <i class="fas fa-play"></i>
+        <span> Show Bus Flows</span>
+      </button>
+      <button id="visualizeAll">
+        <i class="fas fa-film"></i>
+        <span> Visualize All Combinations</span>
+      </button>
+      <button id="stopVisualization">
+        <i class="fas fa-stop"></i>
+        <span> Stop</span>
+      </button>
+      <button id="clearButton">
+        <i class="fas fa-eraser"></i>
+        <span> Clear</span>
+      </button>
+
+      <!-- Messages -->
+      <p class="message" id="messageYear_line"></p>
+      <p class="message" id="messageSeason_line"></p>
+      <p class="message" id="messageBlock_line"></p>
+      <p class="message" id="message_line"></p>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- Include external libraries before your custom script -->
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Leaflet Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
+
+    <!-- Your custom JavaScript -->
+    <script src="scripts.js"></script>
+  </body>
+</html>
