@@ -1254,7 +1254,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const geoJsonModule = {
     loadGeoJson: () => {
       fetch(
-        "https://iastate.box.com/download?file_id=jiymw6skhrinj6oifieo0t4lfxbm9hlz",
+        "https://www.dropbox.com/scl/fi/9vn7vihngwvmgrp5gohix/transmission_lines_all_USA.geojson?rlkey=0u52dptk1mugml234gkid37ox&st=0e2r9pbg&dl=1",
       )
         .then((response) => response.json())
         .then((data) => {
