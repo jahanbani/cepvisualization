@@ -1349,6 +1349,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log("entering geojson");
+    console.log("entering geojson");
     // Load and display GeoJSON data
     // geoJsonModule.loadGeoJson();
   };
