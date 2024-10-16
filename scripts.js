@@ -540,6 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       console.log("Processed seasonBlockMapping:", globals.seasonBlockMapping);
+      console.log("done with processflowdata");
     },
   };
 
@@ -1253,9 +1254,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const geoJsonModule = {
     loadGeoJson: () => {
-      fetch(
-        "https://www.dropbox.com/scl/fi/9vn7vihngwvmgrp5gohix/transmission_lines_all_USA.geojson?rlkey=0u52dptk1mugml234gkid37ox&st=0e2r9pbg&dl=1",
-      )
+      fetch("data/transmission_lines_all_USA.geojson")
         .then((response) => response.json())
         .then((data) => {
           geoJsonModule.addGeoJsonToMap(data);
@@ -1342,13 +1341,16 @@ document.addEventListener("DOMContentLoaded", () => {
     uiModule.initLegend();
     visualizationModule.updateVisualization();
 
+    console.log("entering loadflowdata");
+
     // Load flows.csv and store the data in flowData
     dataModule.loadFlowData().then(() => {
       flowModule.setupSeasonDropdownListener();
     });
 
+    console.log("entering geojson");
     // Load and display GeoJSON data
-    geoJsonModule.loadGeoJson();
+    // geoJsonModule.loadGeoJson();
   };
 
   // Start the application
