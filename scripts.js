@@ -105,10 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         globals.svg
-          // .attr("width", globals.map.getSize().x)
-          // .attr("height", globals.map.getSize().y)
-          // .style("left", "0px")
-          // .style("top", "0px");
           .attr("width", bottomRight.x - topLeft.x)
           .attr("height", bottomRight.y - topLeft.y)
           .style("left", topLeft.x + "px")
@@ -153,194 +149,30 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // Data processing functions
-  // const dataModule = {
-  //   loadData: () => {
-  //     console.log("Loading investment data...");
-  //     return new Promise((resolve, reject) => {
-  //       Papa.parse(config.dataFiles[globals.currentDataset], {
-  //         header: true,
-  //         dynamicTyping: true,
-  //         skipEmptyLines: true,
-  //         download: true,
-  //         complete: (results) => {
-  //           console.log("Investment data loaded successfully.");
-  //           dataModule.processData(results.data);
-  //           resolve();
-  //         },
-  //         error: (error) => {
-  //           console.error("CSV Parsing Error:", error);
-  //           alert("Error loading investment data. Please try again later.");
-  //           reject(error);
-  //         },
-  //       });
-  //     });
-  //   },
-  //
-  //   processData: (data) => {
-  //     console.log("Processing investment data...");
-  //     globals.busData = {};
-  //     data.forEach((row, index) => {
-  //       // Validate essential fields
-  //       if (
-  //         !row.bus ||
-  //         row.latitude === undefined ||
-  //         row.longitude === undefined ||
-  //         isNaN(row.latitude) ||
-  //         isNaN(row.longitude)
-  //       ) {
-  //         console.warn(`Skipping row ${index} due to missing or invalid data.`);
-  //         return;
-  //       }
-  //
-  //       const rowYear = String(row.year).trim();
-  //       const currentYearStr = String(globals.currentYear).trim();
-  //
-  //       if (rowYear !== currentYearStr) {
-  //         return;
-  //       }
-  //
-  //       const key = row.bus;
-  //       if (!globals.busData[key]) {
-  //         globals.busData[key] = {
-  //           bus: row.bus,
-  //           latitude: row.latitude,
-  //           longitude: row.longitude,
-  //           investments: {},
-  //         };
-  //       }
-  //
-  //       if (!row.tech) {
-  //         console.warn(`Row ${index} missing 'tech' field. Skipping.`);
-  //         return;
-  //       }
-  //
-  //       if (!globals.busData[key].investments[row.tech]) {
-  //         globals.busData[key].investments[row.tech] = 0;
-  //       }
-  //       globals.busData[key].investments[row.tech] += row.level;
-  //     });
-  //     console.log("Processed busData:", globals.busData);
-  //   },
-
   const dataModule = {
-    // loadData: () => {
-    //   console.log(`Loading ${globals.currentDataset} data...`);
-    //   return new Promise((resolve, reject) => {
-    //     Papa.parse(config.dataFiles[globals.currentDataset], {
-    //       header: true,
-    //       dynamicTyping: true,
-    //       skipEmptyLines: true,
-    //       download: true,
-    //       complete: (results) => {
-    //         console.log(`${globals.currentDataset} data loaded successfully.`);
-    //         dataModule.processData(results.data);
-    //         resolve();
-    //       },
-    //       error: (error) => {
-    //         console.error("CSV Parsing Error:", error);
-    //         alert(
-    //           `Error loading ${globals.currentDataset} data. Please try again later.`,
-    //         );
-    //         reject(error);
-    //       },
-    //     });
-    //   });
-    // },
-    // loadData: () => {
-    //   console.log(`Loading ${globals.currentDataset} data...`);
-    //   return new Promise((resolve, reject) => {
-    //     const filePath = config.dataFiles[globals.currentDataset];
-    //     if (!filePath) {
-    //       console.error(
-    //         `No file path found for dataset: ${globals.currentDataset}`,
-    //       );
-    //       reject(
-    //         new Error(
-    //           `No file path found for dataset: ${globals.currentDataset}`,
-    //         ),
-    //       );
-    //       return;
-    //     }
-    //
-    //     console.log(`Attempting to load file from: ${filePath}`);
-    //
-    //     Papa.parse(filePath, {
-    //       header: true,
-    //       dynamicTyping: true,
-    //       skipEmptyLines: true,
-    //       download: true,
-    //       complete: (results) => {
-    //         console.log(`${globals.currentDataset} data loaded successfully.`);
-    //         console.log(`${results.data} will be processed.`);
-    //         dataModule.processData(results.data);
-    //         resolve();
-    //       },
-    //       error: (error) => {
-    //         console.error("CSV Parsing Error:", error);
-    //         console.error("Error details:", error.message);
-    //         alert(
-    //           `Error loading ${globals.currentDataset} data. Please check the console for details.`,
-    //         );
-    //         reject(error);
-    //       },
-    //     });
-    //   });
-    // },
-    // processData: (data) => {
-    //   console.log(`Processing ${globals.currentDataset} data...`);
-    //   console.log(`${globals.currentDataset} data is ${data}`);
-    //   globals.busData = {};
-    //   data.forEach((row, index) => {
-    //     // Validate essential fields
-    //     if (
-    //       !row.bus ||
-    //       row.latitude === undefined ||
-    //       row.longitude === undefined ||
-    //       isNaN(row.latitude) ||
-    //       isNaN(row.longitude)
-    //     ) {
-    //       console.warn(`Skipping row ${index} due to missing or invalid data.`);
-    //       return;
-    //     }
-    //
-    //     const rowYear = String(row.year).trim();
-    //     const currentYearStr = String(globals.currentYear).trim();
-    //
-    //     if (rowYear !== currentYearStr) {
-    //       return;
-    //     }
-    //     // Additional filtering for gendisp dataset
-    //     if (globals.currentDataset === "gendisp") {
-    //       if (
-    //         row.season !== globals.currentSeason ||
-    //         row.block !== globals.currentBlock
-    //       ) {
-    //         return;
-    //       }
-    //     }
-    //     const key = row.bus;
-    //     if (!globals.busData[key]) {
-    //       globals.busData[key] = {
-    //         bus: row.bus,
-    //         latitude: row.latitude,
-    //         longitude: row.longitude,
-    //         investments: {},
-    //       };
-    //     }
-    //
-    //     if (!row.tech) {
-    //       console.warn(`Row ${index} missing 'tech' field. Skipping.`);
-    //       return;
-    //     }
-    //
-    //     if (!globals.busData[key].investments[row.tech]) {
-    //       globals.busData[key].investments[row.tech] = 0;
-    //     }
-    //     globals.busData[key].investments[row.tech] += row.level;
-    //   });
-    //   console.log("Processed busData:", globals.busData);
-    // },
+    processLineInvestmentData: (data) => {
+      console.log("Processing line investment data...");
+      globals.lineInvestments = data
+        .filter((row) => row.year == globals.currentYear)
+        .map((row) => ({
+          from: row.from,
+          to: row.to,
+          fromName: "test", //row.bus_name_i,
+          toName: "test", //row.bus_name_j,
+          latFrom: parseFloat(row.latitude_i),
+          lonFrom: parseFloat(row.longitude_i),
+          latTo: parseFloat(row.latitude_j),
+          lonTo: parseFloat(row.longitude_j),
+          voltage: Math.max(
+            parseFloat(row.baskv_i) || 0,
+            parseFloat(row.baskv_j) || 0,
+          ),
+          investment: parseFloat(row.level),
+          isOffshore: row.isosg === "True",
+        }));
+      console.log("Processed line investments:", globals.lineInvestments);
+    },
+
     loadData: () => {
       console.log(`Loading ${globals.currentDataset} data...`);
       return new Promise((resolve, reject) => {
@@ -367,7 +199,14 @@ document.addEventListener("DOMContentLoaded", () => {
           complete: (results) => {
             console.log(`${globals.currentDataset} data loaded successfully.`);
             console.log(`Data rows: ${results.data.length}`);
-            dataModule.processData(results.data);
+            if (
+              globals.currentDataset === "lineinvy" ||
+              globals.currentDataset === "lineinvcumulative"
+            ) {
+              dataModule.processLineInvestmentData(results.data);
+            } else {
+              dataModule.processData(results.data);
+            }
             resolve();
           },
           error: (error) => {
@@ -381,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     },
+
     processData: (data) => {
       console.log(`Processing ${globals.currentDataset} data...`);
       globals.busData = {};
@@ -438,62 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Processed busData:", globals.busData);
       console.log(`Number of buses: ${Object.keys(globals.busData).length}`);
     },
-    // processData: (data) => {
-    //   console.log(`Processing ${globals.currentDataset} data...`);
-    //   globals.busData = {};
-    //   data.forEach((row, index) => {
-    //     // Validate essential fields
-    //     if (
-    //       !row.bus ||
-    //       row.latitude === undefined ||
-    //       row.longitude === undefined ||
-    //       isNaN(row.latitude) ||
-    //       isNaN(row.longitude)
-    //     ) {
-    //       console.warn(`Skipping row ${index} due to missing or invalid data.`);
-    //       return;
-    //     }
-    //
-    //     const rowYear = String(row.year).trim();
-    //     const currentYearStr = String(globals.currentYear).trim();
-    //
-    //     if (rowYear !== currentYearStr) {
-    //       return;
-    //     }
-    //
-    //     // Additional filtering for gendisp dataset
-    //     if (globals.currentDataset === "gendisp") {
-    //       if (
-    //         row.season !== globals.currentSeason ||
-    //         row.block !== globals.currentBlock
-    //       ) {
-    //         return;
-    //       }
-    //     }
-    //
-    //     const key = row.bus;
-    //     if (!globals.busData[key]) {
-    //       globals.busData[key] = {
-    //         bus: row.bus,
-    //         latitude: row.latitude,
-    //         longitude: row.longitude,
-    //         investments: {},
-    //       };
-    //     }
-    //
-    //     if (!row.tech) {
-    //       console.warn(`Row ${index} missing 'tech' field. Skipping.`);
-    //       return;
-    //     }
-    //
-    //     if (!globals.busData[key].investments[row.tech]) {
-    //       globals.busData[key].investments[row.tech] = 0;
-    //     }
-    //     globals.busData[key].investments[row.tech] += row.level;
-    //   });
-    //   console.log("Processed busData:", globals.busData);
-    //   console.log(`Number of buses: ${Object.keys(globals.busData).length}`);
-    // },
 
     loadFlowData: () => {
       console.log("Loading flow data...");
@@ -598,14 +382,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .style("background-color", config.labelColors[tech]);
         item.append("span").attr("class", "legend-label").text(tech);
       });
-
-      // Optionally, add an entry for 'Other'
-      // const otherItem = legend.append("div").attr("class", "legend-item");
-      // otherItem
-      //   .append("span")
-      //   .attr("class", "legend-color")
-      //   .style("background-color", config.labelColors.Other);
-      // otherItem.append("span").attr("class", "legend-label").text("Other");
     },
 
     registerControlEvents: () => {
@@ -769,16 +545,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     },
 
-    // toggleGendispControls: () => {
-    //   const gendispControls = document.getElementById("gendisp-controls");
-    //   if (globals.currentDataset === "gendisp") {
-    //     gendispControls.style.display = "block";
-    //     uiModule.updateBlockOptions();
-    //   } else {
-    //     gendispControls.style.display = "none";
-    //   }
-    // },
-
     updateBlockOptions: () => {
       const blockSelect = document.getElementById("block-select");
       blockSelect.innerHTML = ""; // Clear existing options
@@ -796,23 +562,6 @@ document.addEventListener("DOMContentLoaded", () => {
           blockSelect.appendChild(option);
         }
       }
-      // updateBlockOptions: () => {
-      //   const blockSelect = document.getElementById("block-select");
-      //   blockSelect.innerHTML = ""; // Clear existing options
-      //
-      //   if (globals.currentSeason === "Peak") {
-      //     const option = document.createElement("option");
-      //     option.value = "1";
-      //     option.textContent = "1";
-      //     blockSelect.appendChild(option);
-      //   } else {
-      //     for (let i = 1; i <= 4; i++) {
-      //       const option = document.createElement("option");
-      //       option.value = i.toString();
-      //       option.textContent = i.toString();
-      //       blockSelect.appendChild(option);
-      //     }
-      //   }
 
       // Set default selection
       globals.currentBlock = blockSelect.options[0].value;
@@ -821,24 +570,160 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Visualization functions
   const visualizationModule = {
-    // drawPieCharts: () => {
-    //   console.log("Drawing pie charts...");
-    //   globals.g.selectAll(".bus-pie").remove();
+    drawLineInvestments: () => {
+      console.log("Drawing line investments...");
+
+      // Remove existing line investment layer if it exists
+      if (globals.lineInvestmentLayer) {
+        globals.map.removeLayer(globals.lineInvestmentLayer);
+        if (globals.layerControl) {
+          globals.layerControl.removeLayer(globals.lineInvestmentLayer);
+        }
+      }
+
+      globals.lineInvestmentLayer = L.layerGroup();
+
+      const maxInvestment = Math.max(
+        ...globals.lineInvestments.map((line) => line.investment),
+      );
+
+      console.log("Max investment:", maxInvestment);
+      console.log("Line investments:", globals.lineInvestments);
+
+      globals.lineInvestments.forEach((line) => {
+        const color = line.isOffshore
+          ? "cyan"
+          : visualizationModule.getVoltageColor(line.voltage);
+        const width = visualizationModule.getLineWidth(
+          line.investment,
+          maxInvestment,
+        );
+
+        const polyline = L.polyline(
+          [
+            [line.latFrom, line.lonFrom],
+            [line.latTo, line.lonTo],
+          ],
+          {
+            color: color,
+            weight: width,
+            opacity: 0.8,
+          },
+        ).addTo(globals.lineInvestmentLayer);
+
+        polyline.bindPopup(`
+        <strong>From:</strong> ${line.fromName} (${line.from})<br>
+        <strong>To:</strong> ${line.toName} (${line.to})<br>
+        <strong>Voltage:</strong> ${line.voltage} kV<br>
+        <strong>Investment:</strong> ${line.investment.toFixed(2)}
+      `);
+      });
+
+      globals.lineInvestmentLayer.addTo(globals.map);
+
+      // Update layer control
+      if (!globals.layerControl) {
+        globals.layerControl = L.control
+          .layers(
+            null,
+            {
+              "Existing Transmission Lines": globals.geoJsonLayer,
+              "Line Investments": globals.lineInvestmentLayer,
+            },
+            { collapsed: false },
+          )
+          .addTo(globals.map);
+      } else {
+        globals.layerControl.addOverlay(
+          globals.lineInvestmentLayer,
+          "Line Investments",
+        );
+      }
+    },
+
+    // drawLineInvestments: () => {
+    //   console.log("Drawing line investments...");
+    //   globals.lineInvestmentLayer = L.layerGroup();
     //
-    //   const groupedData = Object.values(globals.busData);
+    //   const maxInvestment = Math.max(
+    //     ...globals.lineInvestments.map((line) => line.investment),
+    //   );
     //
-    //   if (groupedData.length === 0) {
-    //     console.warn("No data available for the selected filters.");
-    //     alert("No data available for the selected filters.");
-    //     return;
-    //   }
+    //   globals.lineInvestments.forEach((line) => {
+    //     const color = line.isOffshore
+    //       ? "cyan"
+    //       : visualizationModule.getVoltageColor(line.voltage);
+    //     const width = visualizationModule.getLineWidth(
+    //       line.investment,
+    //       maxInvestment,
+    //     );
     //
-    //   groupedData.forEach((bus) => {
-    //     visualizationModule.drawPieChart(bus);
+    //     const polyline = L.polyline(
+    //       [
+    //         [line.latFrom, line.lonFrom],
+    //         [line.latTo, line.lonTo],
+    //       ],
+    //       {
+    //         color: color,
+    //         weight: width,
+    //         opacity: 0.8,
+    //       },
+    //     ).addTo(globals.lineInvestmentLayer);
+    //
+    //     polyline.bindPopup(`
+    //     <strong>From:</strong> ${line.fromName} (${line.from})<br>
+    //     <strong>To:</strong> ${line.toName} (${line.to})<br>
+    //     <strong>Voltage:</strong> ${line.voltage} kV<br>
+    //     <strong>Investment:</strong> ${line.investment.toFixed(2)}
+    //   `);
     //   });
     //
-    //   mapModule.updatePosition();
+    //   globals.lineInvestmentLayer.addTo(globals.map);
+    //
+    //   // Add layer control if not already added
+    //   if (!globals.layerControl) {
+    //     globals.layerControl = L.control
+    //       .layers(
+    //         null,
+    //         {
+    //           "Existing Transmission Lines": globals.geoJsonLayer,
+    //           "Line Investments": globals.lineInvestmentLayer,
+    //         },
+    //         { collapsed: false },
+    //       )
+    //       .addTo(globals.map);
+    //   } else {
+    //     globals.layerControl.addOverlay(
+    //       globals.lineInvestmentLayer,
+    //       "Line Investments",
+    //     );
+    //   }
     // },
+
+    getVoltageColor: (voltage) => {
+      const voltageColors = {
+        69: "#ff0000",
+        100: "#ff0000",
+        115: "#ffa500",
+        138: "#ffa500",
+        161: "#ffa500",
+        230: "#ff00ff",
+        345: "#800080",
+        500: "#0000ff",
+        765: "#008000",
+      };
+      const voltagelevels = Object.keys(voltageColors).map(Number);
+      const closestVoltage = voltagelevels.reduce((prev, curr) =>
+        Math.abs(curr - voltage) < Math.abs(prev - voltage) ? curr : prev,
+      );
+      return voltageColors[closestVoltage] || "black";
+    },
+
+    getLineWidth: (investment, maxInvestment) => {
+      const minWidth = 2;
+      const maxWidth = 10;
+      return minWidth + (investment / maxInvestment) * (maxWidth - minWidth);
+    },
     drawPieCharts: () => {
       console.log("Drawing pie charts...");
       globals.g.selectAll(".bus-pie").remove();
@@ -929,13 +814,36 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error drawing pie chart:", e);
       }
     },
+    // updateVisualization: () => {
+    //   console.log("Updating visualization...");
+    //   dataModule
+    //     .loadData()
+    //     .then(() => {
+    //       visualizationModule.drawPieCharts();
+    //       mapModule.updatePosition(); // Force position update after drawing
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error updating visualization:", error);
+    //       alert(
+    //         "Error updating visualization. Please check the console for details.",
+    //       );
+    //     });
+    // },
+
     updateVisualization: () => {
       console.log("Updating visualization...");
       dataModule
         .loadData()
         .then(() => {
-          visualizationModule.drawPieCharts();
-          mapModule.updatePosition(); // Force position update after drawing
+          if (
+            globals.currentDataset === "lineinvy" ||
+            globals.currentDataset === "lineinvcumulative"
+          ) {
+            visualizationModule.drawLineInvestments();
+          } else {
+            visualizationModule.drawPieCharts();
+          }
+          mapModule.updatePosition();
         })
         .catch((error) => {
           console.error("Error updating visualization:", error);
@@ -944,12 +852,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         });
     },
-    // updateVisualization: () => {
-    //   console.log("Updating visualization...");
-    //   dataModule.loadData().then(() => {
-    //     visualizationModule.drawPieCharts();
-    //   });
-    // },
   };
 
   // Flow visualization functions
@@ -1262,18 +1164,49 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch((error) => console.error("Error loading GeoJSON:", error));
     },
 
+    // addGeoJsonToMap: (data) => {
+    //   const geoJsonLayer = L.geoJSON(data, {
+    //     style: geoJsonModule.styleFunction,
+    //     onEachFeature: geoJsonModule.onEachFeature,
+    //   }).addTo(globals.map);
+    //
+    //   globals.geoJsonLayer = geoJsonLayer; // Store the geoJsonLayer globally
+    //
+    //   // Add layer control if not already added
+    //   if (!globals.layerControl) {
+    //     globals.layerControl = L.control
+    //       .layers(
+    //         null,
+    //         {
+    //           "Existing Transmission Lines": geoJsonLayer,
+    //         },
+    //         { collapsed: false },
+    //       )
+    //       .addTo(globals.map);
+    //   } else {
+    //     globals.layerControl.addOverlay(
+    //       geoJsonLayer,
+    //       "Existing Transmission Lines",
+    //     );
+    //   }
+    // },
+
     addGeoJsonToMap: (data) => {
       const geoJsonLayer = L.geoJSON(data, {
         style: geoJsonModule.styleFunction,
         onEachFeature: geoJsonModule.onEachFeature,
-      }).addTo(globals.map);
+      });
+
+      globals.geoJsonLayer = geoJsonLayer; // Store the geoJsonLayer globally
 
       // Add layer control if not already added
       if (!globals.layerControl) {
         globals.layerControl = L.control
           .layers(
             null,
-            { "Existing Transmission Lines": geoJsonLayer },
+            {
+              "Existing Transmission Lines": geoJsonLayer,
+            },
             { collapsed: false },
           )
           .addTo(globals.map);
@@ -1284,6 +1217,29 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
     },
+
+    // addGeoJsonToMap: (data) => {
+    //   const geoJsonLayer = L.geoJSON(data, {
+    //     style: geoJsonModule.styleFunction,
+    //     onEachFeature: geoJsonModule.onEachFeature,
+    //   }).addTo(globals.map);
+    //
+    //   // Add layer control if not already added
+    //   if (!globals.layerControl) {
+    //     globals.layerControl = L.control
+    //       .layers(
+    //         null,
+    //         { "Existing Transmission Lines": geoJsonLayer },
+    //         { collapsed: false },
+    //       )
+    //       .addTo(globals.map);
+    //   } else {
+    //     globals.layerControl.addOverlay(
+    //       geoJsonLayer,
+    //       "Existing Transmission Lines",
+    //     );
+    //   }
+    // },
 
     styleFunction: (feature) => {
       const voltage = feature.properties.VOLTAGE;
@@ -1349,9 +1305,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log("entering geojson");
-    console.log("entering geojson");
     // Load and display GeoJSON data
-    // geoJsonModule.loadGeoJson();
+    geoJsonModule.loadGeoJson();
   };
 
   // Start the application
