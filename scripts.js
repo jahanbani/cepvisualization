@@ -1306,7 +1306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("entering geojson");
     // Load and display GeoJSON data
-    geoJsonModule.loadGeoJson();
+    // geoJsonModule.loadGeoJson();
   };
 
   // Start the application
